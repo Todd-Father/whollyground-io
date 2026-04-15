@@ -1,0 +1,840 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<meta name="color-scheme" content="light dark" />
+<meta name="theme-color" content="#0b1220" media="(prefers-color-scheme: dark)" />
+<meta name="theme-color" content="#f7f8fb" media="(prefers-color-scheme: light)" />
+<meta name="description" content="Supple Leopard at 60 — a phased mobility, strength, and daily-protocol program with progress tracking." />
+<title>Supple Leopard at 60 · whollyground.io</title>
+<style>
+  :root {
+    --bg: #f7f8fb;
+    --surface: #ffffff;
+    --surface-2: #f1f3f8;
+    --text: #0e1524;
+    --muted: #5a6478;
+    --border: #e3e6ee;
+    --accent: #2a6df4;
+    --accent-ink: #ffffff;
+    --success: #16a34a;
+    --warn: #d97706;
+    --shadow: 0 1px 2px rgba(14,21,36,0.04), 0 4px 14px rgba(14,21,36,0.06);
+    --radius: 12px;
+    --radius-sm: 8px;
+    --focus: 0 0 0 3px rgba(42,109,244,0.35);
+    --mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  }
+  :root[data-theme="dark"] {
+    --bg: #0b1220;
+    --surface: #121a2c;
+    --surface-2: #172038;
+    --text: #e7ebf3;
+    --muted: #93a0b8;
+    --border: #25314d;
+    --accent: #6aa1ff;
+    --accent-ink: #0b1220;
+    --success: #4ade80;
+    --warn: #fbbf24;
+    --shadow: 0 1px 2px rgba(0,0,0,0.4), 0 10px 24px rgba(0,0,0,0.35);
+    --focus: 0 0 0 3px rgba(106,161,255,0.45);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #0b1220;
+      --surface: #121a2c;
+      --surface-2: #172038;
+      --text: #e7ebf3;
+      --muted: #93a0b8;
+      --border: #25314d;
+      --accent: #6aa1ff;
+      --accent-ink: #0b1220;
+      --success: #4ade80;
+      --warn: #fbbf24;
+      --shadow: 0 1px 2px rgba(0,0,0,0.4), 0 10px 24px rgba(0,0,0,0.35);
+      --focus: 0 0 0 3px rgba(106,161,255,0.45);
+    }
+  }
+
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.5;
+    -webkit-text-size-adjust: 100%;
+    min-height: 100vh;
+  }
+  a { color: var(--accent); }
+
+  .wrap {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 20px 16px 80px;
+  }
+
+  /* Header */
+  header.top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 12px;
+    flex-wrap: wrap;
+  }
+  header.top h1 {
+    font-size: 22px;
+    margin: 0;
+    letter-spacing: -0.01em;
+  }
+  header.top .sub {
+    color: var(--muted);
+    font-size: 13px;
+    margin-top: 2px;
+  }
+  .brand {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .logo {
+    width: 32px;
+    height: 32px;
+    border-radius: 8px;
+    background: linear-gradient(135deg, var(--accent) 0%, #7d3cff 100%);
+    display: grid;
+    place-items: center;
+    color: white;
+    font-weight: 700;
+    font-size: 14px;
+  }
+  .controls {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+  }
+  .btn {
+    appearance: none;
+    border: 1px solid var(--border);
+    background: var(--surface);
+    color: var(--text);
+    padding: 8px 12px;
+    border-radius: var(--radius-sm);
+    font-size: 13px;
+    cursor: pointer;
+    box-shadow: var(--shadow);
+    transition: transform .05s ease, background .15s ease, border-color .15s ease;
+  }
+  .btn:hover { border-color: var(--accent); }
+  .btn:active { transform: translateY(1px); }
+  .btn:focus-visible { outline: none; box-shadow: var(--focus); }
+  .btn.ghost {
+    background: transparent;
+    box-shadow: none;
+  }
+
+  /* Progress */
+  .progress-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 14px 16px;
+    box-shadow: var(--shadow);
+    margin: 12px 0 16px;
+  }
+  .progress-head {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 8px;
+  }
+  .progress-title {
+    font-weight: 600;
+    font-size: 14px;
+  }
+  .progress-stats {
+    font-variant-numeric: tabular-nums;
+    color: var(--muted);
+    font-size: 13px;
+  }
+  .bar {
+    height: 10px;
+    background: var(--surface-2);
+    border-radius: 999px;
+    overflow: hidden;
+    margin-top: 10px;
+    border: 1px solid var(--border);
+  }
+  .bar-fill {
+    height: 100%;
+    width: 0%;
+    background: linear-gradient(90deg, var(--accent), #7d3cff);
+    transition: width .35s ease;
+  }
+
+  /* Tabs */
+  .tabs {
+    position: sticky;
+    top: 0;
+    background: var(--bg);
+    padding: 8px 0;
+    z-index: 5;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 16px;
+  }
+  .tabs-scroll {
+    display: flex;
+    gap: 6px;
+    overflow-x: auto;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+  .tabs-scroll::-webkit-scrollbar { display: none; }
+  .tab {
+    appearance: none;
+    border: 1px solid var(--border);
+    background: var(--surface);
+    color: var(--text);
+    padding: 8px 12px;
+    border-radius: 999px;
+    font-size: 13px;
+    cursor: pointer;
+    white-space: nowrap;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .tab[aria-selected="true"] {
+    background: var(--accent);
+    color: var(--accent-ink);
+    border-color: var(--accent);
+  }
+  .tab .pill {
+    font-size: 11px;
+    padding: 2px 7px;
+    border-radius: 999px;
+    background: var(--surface-2);
+    color: var(--muted);
+    font-variant-numeric: tabular-nums;
+  }
+  .tab[aria-selected="true"] .pill {
+    background: rgba(255,255,255,0.2);
+    color: var(--accent-ink);
+  }
+  .tab:focus-visible { outline: none; box-shadow: var(--focus); }
+
+  /* Panels */
+  .panel { display: none; }
+  .panel[data-active="true"] { display: block; }
+
+  .section {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 16px;
+    box-shadow: var(--shadow);
+    margin-bottom: 14px;
+  }
+  .section h2 {
+    margin: 0 0 4px;
+    font-size: 17px;
+    letter-spacing: -0.01em;
+  }
+  .section .lede {
+    color: var(--muted);
+    font-size: 14px;
+    margin: 0 0 10px;
+  }
+  .group-title {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    margin: 14px 0 6px;
+  }
+
+  /* Checklist */
+  ul.checklist {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  ul.checklist li {
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+    padding: 10px 8px;
+    border-radius: var(--radius-sm);
+  }
+  ul.checklist li + li { border-top: 1px dashed var(--border); }
+  ul.checklist li:hover { background: var(--surface-2); }
+  ul.checklist label {
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+    cursor: pointer;
+    width: 100%;
+  }
+  ul.checklist input[type="checkbox"] {
+    appearance: none;
+    -webkit-appearance: none;
+    width: 20px;
+    height: 20px;
+    flex: 0 0 20px;
+    border: 1.5px solid var(--border);
+    border-radius: 6px;
+    background: var(--surface);
+    display: inline-grid;
+    place-content: center;
+    margin-top: 2px;
+    cursor: pointer;
+    transition: background .15s ease, border-color .15s ease;
+  }
+  ul.checklist input[type="checkbox"]:focus-visible { outline: none; box-shadow: var(--focus); }
+  ul.checklist input[type="checkbox"]:checked {
+    background: var(--accent);
+    border-color: var(--accent);
+  }
+  ul.checklist input[type="checkbox"]:checked::after {
+    content: "";
+    width: 10px;
+    height: 6px;
+    border-left: 2px solid var(--accent-ink);
+    border-bottom: 2px solid var(--accent-ink);
+    transform: rotate(-45deg) translate(1px, -1px);
+  }
+  ul.checklist .txt { flex: 1; }
+  ul.checklist .ttl {
+    font-weight: 500;
+    font-size: 15px;
+  }
+  ul.checklist input[type="checkbox"]:checked ~ .txt .ttl {
+    text-decoration: line-through;
+    color: var(--muted);
+  }
+  ul.checklist .meta {
+    color: var(--muted);
+    font-size: 13px;
+    margin-top: 2px;
+  }
+
+  /* Progress view */
+  .kpis {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 10px;
+    margin-bottom: 14px;
+  }
+  .kpi {
+    background: var(--surface-2);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    padding: 12px;
+  }
+  .kpi .n {
+    font-size: 22px;
+    font-weight: 700;
+    font-variant-numeric: tabular-nums;
+  }
+  .kpi .l {
+    font-size: 12px;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    margin-top: 2px;
+  }
+  .phase-row {
+    display: grid;
+    grid-template-columns: 120px 1fr 60px;
+    gap: 10px;
+    align-items: center;
+    padding: 8px 0;
+    border-bottom: 1px dashed var(--border);
+  }
+  .phase-row:last-child { border-bottom: none; }
+  .phase-row .name { font-weight: 500; font-size: 14px; }
+  .phase-row .mini {
+    height: 8px;
+    background: var(--surface-2);
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    overflow: hidden;
+  }
+  .phase-row .mini span {
+    display: block;
+    height: 100%;
+    background: linear-gradient(90deg, var(--accent), #7d3cff);
+    width: 0%;
+    transition: width .35s ease;
+  }
+  .phase-row .pct {
+    text-align: right;
+    font-variant-numeric: tabular-nums;
+    color: var(--muted);
+    font-size: 13px;
+  }
+
+  .note {
+    background: var(--surface-2);
+    border-left: 3px solid var(--accent);
+    padding: 10px 12px;
+    border-radius: var(--radius-sm);
+    font-size: 14px;
+    color: var(--text);
+  }
+  .note.warn { border-left-color: var(--warn); }
+
+  footer.foot {
+    margin-top: 24px;
+    color: var(--muted);
+    font-size: 12px;
+    text-align: center;
+  }
+
+  @media (max-width: 520px) {
+    header.top h1 { font-size: 19px; }
+    .kpi .n { font-size: 20px; }
+    .phase-row { grid-template-columns: 100px 1fr 50px; }
+  }
+
+  @media print {
+    .tabs, .controls, .btn { display: none !important; }
+    .panel { display: block !important; page-break-after: always; }
+    .section { box-shadow: none; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="top">
+    <div class="brand">
+      <div class="logo" aria-hidden="true">SL</div>
+      <div>
+        <h1>Supple Leopard at 60</h1>
+        <div class="sub">A phased mobility, strength, and daily-protocol program.</div>
+      </div>
+    </div>
+    <div class="controls">
+      <button class="btn" id="themeBtn" type="button" aria-label="Toggle dark mode">Theme: Auto</button>
+      <button class="btn ghost" id="resetBtn" type="button" aria-label="Reset progress">Reset</button>
+    </div>
+  </header>
+
+  <section class="progress-card" aria-label="Overall progress">
+    <div class="progress-head">
+      <div class="progress-title">Overall progress</div>
+      <div class="progress-stats"><span id="doneCount">0</span> / <span id="totalCount">0</span> · <span id="pctLabel">0%</span></div>
+    </div>
+    <div class="bar" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" id="bar">
+      <div class="bar-fill" id="barFill"></div>
+    </div>
+  </section>
+
+  <nav class="tabs" aria-label="Program sections">
+    <div class="tabs-scroll" role="tablist" id="tablist"></div>
+  </nav>
+
+  <main id="panels"></main>
+
+  <footer class="foot">
+    Progress saved locally on this device. whollyground.io · Supple Leopard at 60
+  </footer>
+</div>
+
+<script>
+(function () {
+  "use strict";
+
+  // --- Program data ----------------------------------------------------------
+  var PROGRAM = [
+    {
+      id: "phase0",
+      label: "Phase 0",
+      title: "Phase 0 — Baseline & Assessment",
+      lede: "Weeks 0–2. Establish where you are before adding load. No pain chasing; today's job is honest data.",
+      groups: [
+        {
+          title: "Self-Assessment",
+          items: [
+            { id: "p0-a1", ttl: "Screen ankle dorsiflexion (knee-to-wall, both sides)", meta: "Record cm; note side-to-side gap." },
+            { id: "p0-a2", ttl: "Screen hip internal/external rotation (supine)", meta: "Note ranges and symmetry." },
+            { id: "p0-a3", ttl: "Overhead reach test against wall", meta: "Low back flat; note compensations." },
+            { id: "p0-a4", ttl: "Single-leg balance, eyes open, 30s each side", meta: "Barefoot, soft focal point." },
+            { id: "p0-a5", ttl: "Resting heart rate on waking, 3 mornings", meta: "Average the three readings." }
+          ]
+        },
+        {
+          title: "Setup",
+          items: [
+            { id: "p0-s1", ttl: "Clear a 6x6 ft floor space", meta: "Mat, lacrosse ball, resistance band, foam roller." },
+            { id: "p0-s2", ttl: "Medical check if new to training or returning post-injury", meta: "Especially cardio or BP concerns." },
+            { id: "p0-s3", ttl: "Set a recurring 20-min daily window", meta: "Same time each day beats heroic weekend blocks." }
+          ]
+        }
+      ]
+    },
+    {
+      id: "phase1",
+      label: "Phase 1",
+      title: "Phase 1 — Foundation",
+      lede: "Weeks 3–6. Restore joint position and breathing mechanics. Volume over intensity.",
+      groups: [
+        {
+          title: "Mobility (daily, 10–15 min)",
+          items: [
+            { id: "p1-m1", ttl: "Ankle wall mobs — 10 slow reps/side", meta: "Big toe 4 inches from wall; knee tracks over midfoot." },
+            { id: "p1-m2", ttl: "90/90 hip switches — 8 reps/side", meta: "Torso tall; feel both hips working." },
+            { id: "p1-m3", ttl: "Thoracic extension over roller — 8 reps", meta: "Roller below shoulder blades; ribs down." },
+            { id: "p1-m4", ttl: "Cat–cow + thread-the-needle — 2 min", meta: "Long exhale into each rotation." }
+          ]
+        },
+        {
+          title: "Strength (3x/week)",
+          items: [
+            { id: "p1-s1", ttl: "Goblet squat to box — 3 x 8", meta: "Pause on box; stand without momentum." },
+            { id: "p1-s2", ttl: "Hip hinge with band or light KB — 3 x 10", meta: "Neutral spine; hinge from hips, not knees." },
+            { id: "p1-s3", ttl: "Half-kneeling press — 3 x 8/side", meta: "Ribs down; no lumbar extension." },
+            { id: "p1-s4", ttl: "Dead bug — 3 x 10/side", meta: "Low back in contact with floor the entire set." }
+          ]
+        },
+        {
+          title: "Aerobic (3x/week)",
+          items: [
+            { id: "p1-z1", ttl: "Zone 2 walk or bike — 30 min", meta: "Conversational pace; nose breathing if possible." }
+          ]
+        }
+      ]
+    },
+    {
+      id: "phase2",
+      label: "Phase 2",
+      title: "Phase 2 — Build",
+      lede: "Weeks 7–12. Add load and complexity. Quality first, then repetitions, then weight.",
+      groups: [
+        {
+          title: "Strength (3x/week, progress weekly)",
+          items: [
+            { id: "p2-s1", ttl: "Back squat or box squat — 4 x 5", meta: "Hold top position; brace before descent." },
+            { id: "p2-s2", ttl: "Romanian deadlift — 4 x 6", meta: "Bar stays close; hinge to mid-shin only." },
+            { id: "p2-s3", ttl: "Push-up progression — 4 x AMRAP-2", meta: "Stop 2 reps shy of failure; full plank." },
+            { id: "p2-s4", ttl: "Single-arm row — 4 x 8/side", meta: "Ribs stacked over pelvis; no torso twist." },
+            { id: "p2-s5", ttl: "Suitcase carry — 3 x 30m/side", meta: "Shoulders square; no side lean." }
+          ]
+        },
+        {
+          title: "Mobility (daily, 10 min)",
+          items: [
+            { id: "p2-m1", ttl: "Couch stretch — 90s/side", meta: "Quad and hip flexor; glute active." },
+            { id: "p2-m2", ttl: "Deep squat hold — 2 min accumulated", meta: "Break into 30s chunks if needed." },
+            { id: "p2-m3", ttl: "Banded shoulder CARs — 5 reps/side", meta: "Controlled articular rotations, slow." }
+          ]
+        },
+        {
+          title: "Aerobic (3–4x/week)",
+          items: [
+            { id: "p2-z1", ttl: "Zone 2 — 40–45 min", meta: "Heart rate cap ~180 minus age." },
+            { id: "p2-z2", ttl: "One short interval session — 6 x 1 min hard / 2 min easy", meta: "Only after 4 weeks of Zone 2." }
+          ]
+        }
+      ]
+    },
+    {
+      id: "phase3",
+      label: "Phase 3",
+      title: "Phase 3 — Integrate",
+      lede: "Weeks 13+. Sport-specific, resilience, and maintenance. Keep the floor high.",
+      groups: [
+        {
+          title: "Strength (2–3x/week)",
+          items: [
+            { id: "p3-s1", ttl: "Heavy hinge — 3 x 3 (RPE 7)", meta: "Deadlift, trap-bar, or KB swing cluster." },
+            { id: "p3-s2", ttl: "Heavy squat pattern — 3 x 5 (RPE 7)", meta: "Front, back, or split-squat variation." },
+            { id: "p3-s3", ttl: "Pull-up or inverted row — 4 x AMRAP-1", meta: "Leave one rep in the tank." },
+            { id: "p3-s4", ttl: "Loaded carry or Turkish get-up — 3 sets", meta: "Pick one and rotate weekly." }
+          ]
+        },
+        {
+          title: "Power & Balance (1x/week)",
+          items: [
+            { id: "p3-p1", ttl: "Low-box step-offs — 3 x 5/side", meta: "Stick landing; knee tracks toes." },
+            { id: "p3-p2", ttl: "Single-leg balance, eyes closed — 3 x 30s/side", meta: "Arms out, soft knee." },
+            { id: "p3-p3", ttl: "Med-ball chest toss or slam — 3 x 5", meta: "Intent, not max effort." }
+          ]
+        },
+        {
+          title: "Maintenance",
+          items: [
+            { id: "p3-m1", ttl: "Weekly mobility audit: re-test Phase 0 screens", meta: "Track ROM changes monthly." },
+            { id: "p3-m2", ttl: "Deload week every 6–8 weeks", meta: "Cut volume ~40%; keep frequency." }
+          ]
+        }
+      ]
+    },
+    {
+      id: "daily",
+      label: "Daily Protocols",
+      title: "Daily Protocols",
+      lede: "Non-negotiables. The small things that compound.",
+      groups: [
+        {
+          title: "Morning",
+          items: [
+            { id: "d-m1", ttl: "Sunlight exposure within 30 min of waking — 5–10 min", meta: "Outside, no sunglasses if safe." },
+            { id: "d-m2", ttl: "Hydrate — 16–20 oz water before coffee", meta: "Add pinch of salt if sweating heavily." },
+            { id: "d-m3", ttl: "3 min breathing: 4s in, 6s out", meta: "Nose only; downshift the nervous system." }
+          ]
+        },
+        {
+          title: "During the day",
+          items: [
+            { id: "d-d1", ttl: "Stand or walk every 30 min", meta: "Timer; even 60 seconds counts." },
+            { id: "d-d2", ttl: "Protein target: ~0.7–1.0 g/lb bodyweight", meta: "Spread across 3–4 meals." },
+            { id: "d-d3", ttl: "10,000 steps (or 7k + 1 strength session)", meta: "Walk after meals when possible." }
+          ]
+        },
+        {
+          title: "Evening",
+          items: [
+            { id: "d-e1", ttl: "Stop caffeine 8–10 hours before bed", meta: "Half-life matters more than you think." },
+            { id: "d-e2", ttl: "Dim lights 60 min before bed", meta: "Screens on warm/night mode." },
+            { id: "d-e3", ttl: "5-min tissue work — calves, hips, or t-spine", meta: "Rotate regions nightly." },
+            { id: "d-e4", ttl: "Consistent sleep/wake time — within 30 min", meta: "Weekends too, as much as life allows." }
+          ]
+        }
+      ]
+    },
+    {
+      id: "progress",
+      label: "Progress",
+      title: "Progress",
+      lede: "Your trend line across phases and daily habits.",
+      isProgress: true
+    }
+  ];
+
+  // --- Storage ---------------------------------------------------------------
+  var STORAGE_KEY = "sl60.checks.v1";
+  var THEME_KEY = "sl60.theme.v1";
+
+  function loadChecks() {
+    try {
+      var raw = localStorage.getItem(STORAGE_KEY);
+      return raw ? JSON.parse(raw) : {};
+    } catch (e) { return {}; }
+  }
+  function saveChecks(obj) {
+    try { localStorage.setItem(STORAGE_KEY, JSON.stringify(obj)); } catch (e) {}
+  }
+  var checks = loadChecks();
+
+  // --- Theme -----------------------------------------------------------------
+  var themeBtn = document.getElementById("themeBtn");
+  function applyTheme(mode) {
+    if (mode === "light" || mode === "dark") {
+      document.documentElement.setAttribute("data-theme", mode);
+    } else {
+      document.documentElement.removeAttribute("data-theme");
+    }
+    themeBtn.textContent = "Theme: " + (mode === "light" ? "Light" : mode === "dark" ? "Dark" : "Auto");
+  }
+  var savedTheme = null;
+  try { savedTheme = localStorage.getItem(THEME_KEY); } catch (e) {}
+  applyTheme(savedTheme || "auto");
+
+  themeBtn.addEventListener("click", function () {
+    var cur = document.documentElement.getAttribute("data-theme") || "auto";
+    var next = cur === "auto" ? "light" : cur === "light" ? "dark" : "auto";
+    applyTheme(next);
+    try { localStorage.setItem(THEME_KEY, next); } catch (e) {}
+  });
+
+  // --- Render ----------------------------------------------------------------
+  var tablist = document.getElementById("tablist");
+  var panels = document.getElementById("panels");
+
+  // Build tabs
+  PROGRAM.forEach(function (p, idx) {
+    var tab = document.createElement("button");
+    tab.type = "button";
+    tab.className = "tab";
+    tab.setAttribute("role", "tab");
+    tab.setAttribute("aria-selected", idx === 0 ? "true" : "false");
+    tab.setAttribute("aria-controls", "panel-" + p.id);
+    tab.id = "tab-" + p.id;
+    tab.dataset.panel = p.id;
+    tab.innerHTML = '<span>' + p.label + '</span>' + (p.isProgress ? '' : '<span class="pill" id="pill-' + p.id + '">0/0</span>');
+    tab.addEventListener("click", function () { selectTab(p.id); });
+    tablist.appendChild(tab);
+  });
+
+  // Build panels
+  PROGRAM.forEach(function (p, idx) {
+    var panel = document.createElement("section");
+    panel.id = "panel-" + p.id;
+    panel.className = "panel";
+    panel.setAttribute("role", "tabpanel");
+    panel.setAttribute("aria-labelledby", "tab-" + p.id);
+    panel.dataset.active = idx === 0 ? "true" : "false";
+
+    if (p.isProgress) {
+      panel.innerHTML = renderProgressPanel();
+    } else {
+      var html = '';
+      html += '<div class="section">';
+      html += '  <h2>' + p.title + '</h2>';
+      html += '  <p class="lede">' + p.lede + '</p>';
+      html += '</div>';
+      p.groups.forEach(function (g) {
+        html += '<div class="section" data-phase="' + p.id + '">';
+        html += '  <div class="group-title">' + g.title + '</div>';
+        html += '  <ul class="checklist">';
+        g.items.forEach(function (it) {
+          var checked = checks[it.id] ? " checked" : "";
+          html += '    <li>';
+          html += '      <label>';
+          html += '        <input type="checkbox" data-id="' + it.id + '" data-phase="' + p.id + '"' + checked + ' />';
+          html += '        <span class="txt">';
+          html += '          <span class="ttl">' + it.ttl + '</span>';
+          html += (it.meta ? '          <span class="meta">' + it.meta + '</span>' : '');
+          html += '        </span>';
+          html += '      </label>';
+          html += '    </li>';
+        });
+        html += '  </ul>';
+        html += '</div>';
+      });
+      panel.innerHTML = html;
+    }
+
+    panels.appendChild(panel);
+  });
+
+  // Checkbox handling
+  panels.addEventListener("change", function (e) {
+    var t = e.target;
+    if (t && t.matches && t.matches('input[type="checkbox"][data-id]')) {
+      var id = t.getAttribute("data-id");
+      if (t.checked) checks[id] = 1; else delete checks[id];
+      saveChecks(checks);
+      updateAll();
+    }
+  });
+
+  // Tab selection
+  function selectTab(id) {
+    PROGRAM.forEach(function (p) {
+      var tab = document.getElementById("tab-" + p.id);
+      var panel = document.getElementById("panel-" + p.id);
+      var on = p.id === id;
+      tab.setAttribute("aria-selected", on ? "true" : "false");
+      panel.dataset.active = on ? "true" : "false";
+    });
+    if (id === "progress") renderProgressInto();
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }
+
+  // Reset
+  document.getElementById("resetBtn").addEventListener("click", function () {
+    if (!confirm("Reset all progress on this device?")) return;
+    checks = {};
+    saveChecks(checks);
+    // Uncheck everything in DOM
+    Array.prototype.forEach.call(panels.querySelectorAll('input[type="checkbox"]'), function (el) {
+      el.checked = false;
+    });
+    updateAll();
+  });
+
+  // --- Progress calc & rendering --------------------------------------------
+  function counts() {
+    var per = {};
+    var total = 0, done = 0;
+    PROGRAM.forEach(function (p) {
+      if (p.isProgress) return;
+      var t = 0, d = 0;
+      p.groups.forEach(function (g) {
+        g.items.forEach(function (it) {
+          t++; total++;
+          if (checks[it.id]) { d++; done++; }
+        });
+      });
+      per[p.id] = { total: t, done: d };
+    });
+    return { per: per, total: total, done: done };
+  }
+
+  function updateAll() {
+    var c = counts();
+
+    // Header bar
+    var pct = c.total ? Math.round((c.done / c.total) * 100) : 0;
+    document.getElementById("doneCount").textContent = c.done;
+    document.getElementById("totalCount").textContent = c.total;
+    document.getElementById("pctLabel").textContent = pct + "%";
+    var bar = document.getElementById("bar");
+    var fill = document.getElementById("barFill");
+    fill.style.width = pct + "%";
+    bar.setAttribute("aria-valuenow", String(pct));
+
+    // Tab pills
+    PROGRAM.forEach(function (p) {
+      if (p.isProgress) return;
+      var pill = document.getElementById("pill-" + p.id);
+      if (pill) pill.textContent = c.per[p.id].done + "/" + c.per[p.id].total;
+    });
+
+    // If progress panel is active, re-render it
+    var prog = document.getElementById("panel-progress");
+    if (prog && prog.dataset.active === "true") renderProgressInto();
+  }
+
+  function renderProgressPanel() {
+    return '<div id="progress-body"></div>';
+  }
+
+  function renderProgressInto() {
+    var body = document.getElementById("progress-body");
+    if (!body) return;
+    var c = counts();
+    var pct = c.total ? Math.round((c.done / c.total) * 100) : 0;
+    var phases = PROGRAM.filter(function (p) { return !p.isProgress; });
+
+    var html = '';
+    html += '<div class="section">';
+    html += '  <h2>Progress</h2>';
+    html += '  <p class="lede">Your trend line across phases and daily habits.</p>';
+    html += '  <div class="kpis">';
+    html += '    <div class="kpi"><div class="n">' + pct + '%</div><div class="l">Overall</div></div>';
+    html += '    <div class="kpi"><div class="n">' + c.done + '</div><div class="l">Completed</div></div>';
+    html += '    <div class="kpi"><div class="n">' + (c.total - c.done) + '</div><div class="l">Remaining</div></div>';
+    html += '    <div class="kpi"><div class="n">' + c.total + '</div><div class="l">Total items</div></div>';
+    html += '  </div>';
+
+    html += '  <div class="group-title">By section</div>';
+    phases.forEach(function (p) {
+      var r = c.per[p.id];
+      var p1 = r.total ? Math.round((r.done / r.total) * 100) : 0;
+      html += '<div class="phase-row">';
+      html += '  <div class="name">' + p.label + '</div>';
+      html += '  <div class="mini"><span style="width:' + p1 + '%"></span></div>';
+      html += '  <div class="pct">' + p1 + '%</div>';
+      html += '</div>';
+    });
+    html += '</div>';
+
+    html += '<div class="section"><div class="note">Tip: export your progress by printing this page to PDF — all sections expand in print view.</div></div>';
+
+    body.innerHTML = html;
+  }
+
+  // Init
+  updateAll();
+
+})();
+</script>
+</body>
+</html>
