@@ -3,3 +3,14 @@
 **/.claude/
 node_modules/
 .vercel/
+
+# Secrets — this is a PUBLIC repo. Never commit credentials.
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.p12
+*secret*
+*credential*
+# SendGrid / Zoho / Ghost tokens live in env only, never in tracked files.
