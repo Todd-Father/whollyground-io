@@ -1,5 +1,8 @@
 # CLAUDE.md
 
+## Tools wired
+GitHub (`gh` CLI), Vercel. Static/content site — no database.
+
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
 ## Project Overview
