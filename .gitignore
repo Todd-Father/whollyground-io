@@ -1,8 +1,12 @@
 .DS_Store
-.claude/
-**/.claude/
 node_modules/
 .vercel/
+
+# Claude: track shared config (settings.json, commands/), ignore machine-specific state
+.claude/settings.local.json
+.claude/worktrees/
+.claude/launch.json
+.claude/skills/
 
 # Secrets — this is a PUBLIC repo. Never commit credentials.
 .env
